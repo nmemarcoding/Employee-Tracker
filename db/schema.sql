@@ -2,12 +2,13 @@ DROP TABLE IF EXISTS department;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS employee;
 
-create table department(
-    id int AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(30) NOT NULL
+
+CREATE TABLE department (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30)  NOT NULL
 );
 
-create table role (
+CREATE TABLE role ( 
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30)  NOT NULL,
     salary DECIMAL NOT NULL,
@@ -22,4 +23,4 @@ CREATE TABLE employee (
     role_id INT NOT NULL,
     manager_id INT NULL,
     FOREIGN KEY (role_id) REFERENCES role(id)
-);
+)
