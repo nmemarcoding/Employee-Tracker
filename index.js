@@ -59,5 +59,16 @@ function viewAllDepartments() {
     })
     start();
 }
+// view all roles
+function viewAllRoles() {
+    db.query(`SELECT role.id, role.title, role.salary, department.name AS department FROM role
+        LEFT JOIN department ON (department.id = role.department_id)
+        ORDER BY role.id;`, (err, data) => {
+        console.log('\n')
+        console.table(data)
+    })
+
+    start();
+}
 
 start();
