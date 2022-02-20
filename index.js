@@ -151,4 +151,60 @@ addRole = () => {
         })
 };
 
+// add an employee
+function addEmployee() {
+    db.query("SELECT * FROM role", (err, result) => {
+        if (err) throw err;
+        const roles = result.map((role) => ({
+            value: role.id,
+            name: role.title,
+        }));
+        db.query("SELECT * FROM employee", (err, result) => {
+            if (err) throw err;
+            const managers = result.map((employee) => ({
+                value: employee.id,
+                name: employee.first_name + " " + employee.last_name,
+            }));
+            managers.push({ name: "None", value: null });
+            inquirer
+                .prompt([{
+                        type: "input",
+                        message: "New employee first name:",
+                        name: 'first_name',
+                    },
+                    {
+                        type: "input",
+                        message: "New employee last name:",
+                        name: 'last_name'
+                    },
+                    {
+                        type: "list",
+                        message: "New employee role:",
+                        name: "role_id",
+                        choices: roles
+                    },
+                    {
+                        type: "list",
+                        message: "New employee manager:",
+                        name: "manager_id",
+                        choices: managers,
+                    }
+                ])
+                .then(function(answer) {
+                    db.query(
+                        "INSERT INTO employee SET ?",
+                        answer,
+                        function(err, result) {
+                            if (err) {
+                                throw err;
+                            }
+                            console.log("\nNew employee " + answer.first_name + " " + answer.last_name + "added to database.\n");
+                            start();
+                        }
+                    );
+                });
+        });
+    })
+};
+
 start();
