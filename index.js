@@ -110,5 +110,45 @@ function addDepartment() {
             start();
         });
 }
+// add a role
+addRole = () => {
+    inquirer
+        .prompt([{
+                type: "input",
+                message: "New role name:",
+                name: "new_role"
+            },
+            {
+                type: "number",
+                message: "New role salary:",
+                name: "new_salary"
+            }
+        ])
+        .then(answer => {
+            const params = [answer.new_role, answer.new_salary];
+            const roleQuery = `SELECT name, id FROM department`;
+            db.query(roleQuery, (err, data) => {
+                if (err) throw err;
+                const depts = data.map(({ name, id }) => ({ name: name, value: id }));
+                inquirer.prompt([{
+                        type: 'list',
+                        name: 'new_dept',
+                        message: "New role department:",
+                        choices: depts
+                    }])
+                    .then(deptChoice => {
+                        const department = deptChoice.new_dept;
+                        params.push(department);
+                        console.log(params);
+                        const sql = `INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)`;
+                        db.query(sql, params, (err, result) => {
+                            if (err) throw err;
+                            console.log("\nNew role " + answer.new_role + "added to database.\n");
+                            start();
+                        })
+                    })
+            })
+        })
+};
 
 start();
