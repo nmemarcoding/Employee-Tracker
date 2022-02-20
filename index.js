@@ -51,6 +51,13 @@ function start() {
         });
 }
 
-
+// view all departments
+function viewAllDepartments() {
+    db.query('SELECT * FROM department', (err, data) => {
+        console.log('\n')
+        console.table(data)
+    })
+    start();
+}
 
 start();
