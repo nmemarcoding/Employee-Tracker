@@ -7,7 +7,7 @@
 - [Credits](#credits) 
 - [License](#license)
 ## Installation 
-* You should install Node.js, mysql, and run the MySQL server yhen run all the commands below.
+* You should install Node.js, mysql, and run the MySQL server then run all the commands below.
 * npm install
 * mysql -u -root -p 
 * source db/db.sql
